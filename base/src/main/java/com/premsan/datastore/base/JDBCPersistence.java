@@ -16,8 +16,14 @@
 package com.premsan.datastore.base;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class JDBCPersistence implements Persistence {
+
+    private static final String GET_MODEL_SQL =
+            "SELECT * FROM MODELS WHERE name = ? AND version = ?";
 
     private final Connection connection;
 
@@ -27,7 +33,18 @@ public class JDBCPersistence implements Persistence {
     }
 
     @Override
-    public Model getModel(final String id, final Integer version) {
+    public Model getModel(final String name, final Integer version) {
+
+        try {
+            final PreparedStatement preparedStatement = connection.prepareStatement(GET_MODEL_SQL);
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, version);
+
+            final ResultSet resultSet = preparedStatement.executeQuery();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         return null;
     }
@@ -36,7 +53,7 @@ public class JDBCPersistence implements Persistence {
     public void putModel(final Model model) {}
 
     @Override
-    public void removeModel(final String id, final Integer version) {}
+    public void removeModel(final String name, final Integer version) {}
 
     @Override
     public ModelInstance getModelInstance(final String id) {
