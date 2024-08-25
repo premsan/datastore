@@ -4,7 +4,7 @@ plugins {
     id("com.diffplug.spotless")
 }
 
-group = "com.premsan.datastore.base"
+group = "com.premsan.datastore.wing"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -17,7 +17,6 @@ repositories {
 }
 
 dependencies {
-
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
